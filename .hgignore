@@ -8,3 +8,4 @@ build/windows/**/.vs/*
 **/dev.ini
 **.dat
 bin/**.png
+**.sublime-workspace
