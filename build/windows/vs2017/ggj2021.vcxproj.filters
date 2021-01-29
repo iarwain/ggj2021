@@ -2,19 +2,19 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="src">
-      <UniqueIdentifier>{3D1A784D-57B8-A844-9DF0-3426219DC259}</UniqueIdentifier>
+      <UniqueIdentifier>{29F7FA7F-2A1A-BB4B-980E-9D2399366022}</UniqueIdentifier>
     </Filter>
     <Filter Include="include">
-      <UniqueIdentifier>{75D0E089-16B6-C146-AE41-40C968399A1F}</UniqueIdentifier>
+      <UniqueIdentifier>{E6F43861-BACC-D74D-B65B-5E068A6D6F54}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\Scroll">
-      <UniqueIdentifier>{74B95FBF-A03A-2C4B-8FA8-44F821D71B71}</UniqueIdentifier>
+      <UniqueIdentifier>{9949F3D4-B18D-A142-AC0A-E0F239BB811D}</UniqueIdentifier>
     </Filter>
     <Filter Include="inline">
-      <UniqueIdentifier>{DED7718B-571D-0243-AD23-C56071D8A2F7}</UniqueIdentifier>
+      <UniqueIdentifier>{A829DBD4-93F1-F441-9A53-23960A853DF3}</UniqueIdentifier>
     </Filter>
     <Filter Include="config">
-      <UniqueIdentifier>{7C64306C-96A6-6B45-AA8E-5306D3FB04F0}</UniqueIdentifier>
+      <UniqueIdentifier>{BFA86D95-AF61-B546-B675-C784B58DF98B}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -30,7 +30,13 @@
     <None Include="..\..\..\include\Scroll\ScrollObject.inl">
       <Filter>inline</Filter>
     </None>
+    <None Include="..\..\..\data\config\card.ini">
+      <Filter>config</Filter>
+    </None>
     <None Include="..\..\..\data\config\CreationTemplate.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\dev.ini">
       <Filter>config</Filter>
     </None>
     <None Include="..\..\..\data\config\ggj2021.ini">
@@ -42,11 +48,17 @@
     <None Include="..\..\..\data\config\ggj2021p.ini">
       <Filter>config</Filter>
     </None>
+    <None Include="..\..\..\data\config\player.ini">
+      <Filter>config</Filter>
+    </None>
     <None Include="..\..\..\data\config\SettingsTemplate.ini">
       <Filter>config</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\include\Card.h">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\include\ggj2021.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -54,6 +66,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\orxArchive.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Player.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\Scroll\Scroll.h">
@@ -70,10 +85,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\Card.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\ggj2021.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\Object.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Player.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

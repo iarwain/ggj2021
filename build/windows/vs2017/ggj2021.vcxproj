@@ -27,7 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D1C12715-81EF-6646-94DA-8AA99A903887}</ProjectGuid>
+    <ProjectGuid>{3D756D97-A1EB-B643-841F-4BDC2405CB50}</ProjectGuid>
     <RootNamespace>ggj2021</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
@@ -365,18 +365,24 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\include\Card.h" />
     <ClInclude Include="..\..\..\include\ggj2021.h" />
     <ClInclude Include="..\..\..\include\Object.h" />
     <ClInclude Include="..\..\..\include\orxArchive.h" />
+    <ClInclude Include="..\..\..\include\Player.h" />
     <ClInclude Include="..\..\..\include\Scroll\Scroll.h" />
     <ClInclude Include="..\..\..\include\Scroll\ScrollBase.h" />
     <ClInclude Include="..\..\..\include\Scroll\ScrollEd.h" />
     <ClInclude Include="..\..\..\include\Scroll\ScrollObject.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\Card.cpp">
+    </ClCompile>
     <ClCompile Include="..\..\..\src\ggj2021.cpp">
     </ClCompile>
     <ClCompile Include="..\..\..\src\Object.cpp">
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Player.cpp">
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -384,10 +390,13 @@
     <None Include="..\..\..\include\Scroll\ScrollBase.inl" />
     <None Include="..\..\..\include\Scroll\ScrollEd.inl" />
     <None Include="..\..\..\include\Scroll\ScrollObject.inl" />
+    <None Include="..\..\..\data\config\card.ini" />
     <None Include="..\..\..\data\config\CreationTemplate.ini" />
+    <None Include="..\..\..\data\config\dev.ini" />
     <None Include="..\..\..\data\config\ggj2021.ini" />
     <None Include="..\..\..\data\config\ggj2021d.ini" />
     <None Include="..\..\..\data\config\ggj2021p.ini" />
+    <None Include="..\..\..\data\config\player.ini" />
     <None Include="..\..\..\data\config\SettingsTemplate.ini" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

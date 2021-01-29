@@ -8,10 +8,19 @@
 #undef __SCROLL_IMPL__
 
 #include "Object.h"
+#include "Card.h"
+#include "Player.h"
 
 #define orxARCHIVE_IMPL
 #include "orxArchive.h"
 #undef orxARCHIVE_IMPL
+
+static orxBOOL sbRestart = orxTRUE;
+
+orxBOOL orxFASTCALL SaveCallback(const orxSTRING _zSectionName, const orxSTRING _zKeyName, const orxSTRING _zFileName, orxBOOL _bUseEncryption)
+{
+    return (!orxString_Compare(_zSectionName, "Save")) ? orxTRUE : orxFALSE;
+}
 
 /** Update function, it has been registered to be called every tick of the core clock
  */
@@ -23,22 +32,28 @@ void ggj2021::Update(const orxCLOCK_INFO &_rstInfo)
         // Send close event
         orxEvent_SendShort(orxEVENT_TYPE_SYSTEM, orxSYSTEM_EVENT_CLOSE);
     }
+    // Screenshot?
+    else if(orxInput_HasBeenActivated("Screenshot"))
+    {
+        orxScreenshot_Capture();
+    }
 }
 
 /** Init function, it is called when all orx's modules have been initialized
  */
 orxSTATUS ggj2021::Init()
 {
-    // Display a small hint in console
-    orxLOG("\n* This template project creates a simple scene"
-    "\n* You can play with the config parameters in ../data/config/ggj2021.ini"
-    "\n* After changing them, relaunch the executable to see the changes.");
+    // Pushes game section
+    orxConfig_PushSection("Game");
 
-    // Initialize archive (ZIP) resource type
-    orxArchive_Init();
+    // Creates all viewports
+    for(orxS32 i = 0, iCount = orxConfig_GetListCount("ViewportList"); i < iCount; i++)
+    {
+        orxViewport_CreateFromConfig(orxConfig_GetListString("ViewportList", i));
+    }
 
-    // Create the scene
-    CreateObject("Scene");
+    // Go to title
+    CreateObject("Title");
 
     // Done!
     return orxSTATUS_SUCCESS;
@@ -65,14 +80,24 @@ void ggj2021::BindObjects()
 {
     // Bind the Object class to the Object config section
     ScrollBindObject<Object>("Object");
+    ScrollBindObject<Card>("Card");
+    ScrollBindObject<Player>("Player");
 }
 
 /** Bootstrap function, it is called before config is initialized, allowing for early resource storage definitions
  */
 orxSTATUS ggj2021::Bootstrap() const
 {
+    // Initialize archive (ZIP) resource type
+    orxArchive_Init();
+
     // Add a config storage to find the initial config file
+    orxResource_AddStorage(orxCONFIG_KZ_RESOURCE_GROUP, "game.dat", orxFALSE);
     orxResource_AddStorage(orxCONFIG_KZ_RESOURCE_GROUP, "../data/config", orxFALSE);
+    orxResource_AddStorage(orxCONFIG_KZ_RESOURCE_GROUP, "../data/font", orxFALSE);
+
+    // Loads scores
+    orxConfig_Load(orxFile_GetApplicationSaveDirectory("GGJ2021/score.dat"));
 
     // Return orxSTATUS_FAILURE to prevent orx from loading the default config file
     return orxSTATUS_SUCCESS;
@@ -82,8 +107,15 @@ orxSTATUS ggj2021::Bootstrap() const
  */
 int main(int argc, char **argv)
 {
-    // Execute our game
-    ggj2021::GetInstance().Execute(argc, argv);
+    // Should restart?
+    while(sbRestart)
+    {
+        // Clears restart
+        sbRestart = orxFALSE;
+
+        // Execute our game
+        ggj2021::GetInstance().Execute(argc, argv);
+    }
 
     // Done!
     return EXIT_SUCCESS;
