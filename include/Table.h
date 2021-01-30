@@ -15,26 +15,27 @@ class Table : public Object
 {
 public:
 
-                orxU32          GetCardCount() const    {return u32CardCount;}
-                orxU32          GetWidth() const        {return u32Width;}
-                orxU32          GetHeight() const       {return u32Height;}
-                Card ** const   GetCards() const        {return apoCards;}
+    struct Slot {
+        Card       *poCard;
+        orxOBJECT  *pstParent;
+    };
+
+                Slot           *astSlots                = {};
+                orxU32          u32CardCount            = 0;
+                orxU32          u32Width                = 0;
+                orxU32          u32Height               = 0;
+
 
 protected:
 
                 void            OnCreate();
                 void            OnDelete();
-                void            Update(const orxCLOCK_INFO &Info);
+                void            Update(const orxCLOCK_INFO &_rstInfo);
 
 
 private:
 
                 void            Deal();
-
-                Card          **apoCards;
-                orxU32          u32CardCount;
-                orxU32          u32Width;
-                orxU32          u32Height;
 };
 
 #endif // __TABLE_H__

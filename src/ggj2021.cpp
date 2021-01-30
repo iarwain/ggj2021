@@ -44,10 +44,10 @@ void ggj2021::Update(const orxCLOCK_INFO &_rstInfo)
  */
 orxSTATUS ggj2021::Init()
 {
-    // Pushes game section
+    // Push game section
     orxConfig_PushSection("Game");
 
-    // Creates all viewports
+    // Create all viewports
     for(orxS32 i = 0, iCount = orxConfig_GetListCount("ViewportList"); i < iCount; i++)
     {
         orxViewport_CreateFromConfig(orxConfig_GetListString("ViewportList", i));
@@ -64,7 +64,6 @@ orxSTATUS ggj2021::Init()
  */
 orxSTATUS ggj2021::Run()
 {
-    // Return orxSTATUS_FAILURE to instruct orx to quit
     return orxSTATUS_SUCCESS;
 }
 
@@ -72,14 +71,13 @@ orxSTATUS ggj2021::Run()
  */
 void ggj2021::Exit()
 {
-    // Let Orx clean all our mess automatically. :)
 }
 
 /** BindObjects function, ScrollObject-derived classes are bound to config sections here
  */
 void ggj2021::BindObjects()
 {
-    // Bind the Object class to the Object config section
+    // Bind all object classes
     ScrollBindObject<Object>("Object");
     ScrollBindObject<Card>("Card");
     ScrollBindObject<Table>("Table");
@@ -98,7 +96,7 @@ orxSTATUS ggj2021::Bootstrap() const
     orxResource_AddStorage(orxCONFIG_KZ_RESOURCE_GROUP, "../data/config", orxFALSE);
     orxResource_AddStorage(orxCONFIG_KZ_RESOURCE_GROUP, "../data/font", orxFALSE);
 
-    // Loads scores
+    // Load scores
     orxConfig_Load(orxFile_GetApplicationSaveDirectory("GGJ2021/score.dat"));
 
     // Return orxSTATUS_FAILURE to prevent orx from loading the default config file
@@ -112,7 +110,7 @@ int main(int argc, char **argv)
     // Should restart?
     while(sbRestart)
     {
-        // Clears restart
+        // Clear restart
         sbRestart = orxFALSE;
 
         // Execute our game

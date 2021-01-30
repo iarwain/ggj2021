@@ -4,16 +4,17 @@
  */
 
 #include "Table.h"
+#include "Player.h"
 
 void Table::OnCreate()
 {
-    // Inits variables
+    // Init variables
     orxConfig_SetBool("IsTable", orxTRUE);
     u32CardCount    = orxConfig_GetU32("CardCount");
     u32Width        = ((orxU32)orxMath_Sqrt(orxU2F(u32CardCount))) & ~1;
     u32Height       = u32CardCount / u32Width;
     u32CardCount    = u32Width * u32Height;
-    apoCards        = (Card **) orxMemory_Allocate(u32CardCount * sizeof(Card *), orxMEMORY_TYPE_MAIN);
+    astSlots        = (Slot *) orxMemory_Allocate(u32CardCount * sizeof(Slot), orxMEMORY_TYPE_MAIN);
 
     // Deal cards
     Deal();
@@ -21,8 +22,8 @@ void Table::OnCreate()
 
 void Table::OnDelete()
 {
-    // Clears variables
-    orxMemory_Free(apoCards);
+    // Clear variables
+    orxMemory_Free(astSlots);
 }
 
 void Table::Update(const orxCLOCK_INFO &_rstInfo)
@@ -31,12 +32,11 @@ void Table::Update(const orxCLOCK_INFO &_rstInfo)
 
 void Table::Deal()
 {
-    ggj2021 &   roGame = ggj2021::GetInstance();
-    Card *      poCard;
-    Card *      apoShuffleCards[1024] = {};
+    ggj2021    &roGame = ggj2021::GetInstance();
+    Card       *poCard, *apoShuffleCards[1024] = {};
     orxU32      u32CardIndex = 0;
 
-    // Deletes all cards
+    // Delete all cards
     while((poCard = roGame.GetNextObject<Card>()) != orxNULL)
     {
         roGame.DeleteObject(poCard);
@@ -54,7 +54,6 @@ void Table::Deal()
                 u32CardIndex = orxMath_GetRandomU32(0, 1024);
             } while(apoShuffleCards[u32CardIndex] != orxNULL);
             apoShuffleCards[u32CardIndex] = roGame.CreateObject<Card>(zCard);
-            orxObject_SetOwner(apoShuffleCards[u32CardIndex]->GetOrxObject(), GetOrxObject());
         }
     }
     orxConfig_PopSection();
@@ -72,11 +71,18 @@ void Table::Deal()
 
         for(u32CardIndex = u32Count = 0; u32CardIndex < 1024; u32CardIndex++)
         {
-            if(apoShuffleCards[u32CardIndex] != orxNULL)
+            Card *poCard;
+            if((poCard = apoShuffleCards[u32CardIndex]) != orxNULL)
             {
-                apoCards[u32Count++] = apoShuffleCards[u32CardIndex];
-                apoShuffleCards[u32CardIndex]->SetPosition(vPos);
-                if(u32Count % u32Width == 0)
+                orxOBJECT *pstParent;
+                pstParent = orxObject_CreateFromConfig("Slot");
+                orxObject_SetPosition(pstParent, &vPos);
+                orxObject_SetOwner(pstParent, GetOrxObject());
+                orxObject_SetOwner(poCard->GetOrxObject(), pstParent);
+                orxObject_SetParent(poCard->GetOrxObject(), pstParent);
+                astSlots[u32Count].poCard   = poCard;
+                astSlots[u32Count].pstParent= pstParent;
+                if(++u32Count % u32Width == 0)
                 {
                     vPos.fX = vInit.fX;
                     vPos.fY += vPadding.fY;
@@ -87,5 +93,16 @@ void Table::Deal()
                 }
             }
         }
+    }
+
+    // Init players
+    u32CardIndex = 0;
+    for(Player *poPlayer = roGame.GetNextObject<Player>();
+        poPlayer;
+        poPlayer = roGame.GetNextObject<Player>(poPlayer))
+    {
+        poPlayer->poTable = this;
+        poPlayer->Select(0, u32CardIndex++);
+        poPlayer->Select(1, u32CardIndex++);
     }
 }
