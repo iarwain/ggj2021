@@ -39,7 +39,7 @@ void Table::Deal()
     {
         roGame.DeleteObject(poCard);
     }
-    return;
+
     // Create cards
     orxConfig_PushSection(orxConfig_GetString("Deck"));
     for(orxU32 i = 0; i < u32CardCount; i += 2)
