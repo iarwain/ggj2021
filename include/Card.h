@@ -14,6 +14,10 @@ class Card : public Object
 {
 public:
 
+                orxBOOL         IsHidden() const    {return orxObject_IsCurrentAnim(GetOrxObject(), "Hidden");}
+                orxBOOL         IsVisible() const   {return orxObject_IsCurrentAnim(GetOrxObject(), "Visible");}
+                orxBOOL         IsRevealed() const  {return orxObject_IsCurrentAnim(GetOrxObject(), "Revealed");}
+
 
 protected:
 

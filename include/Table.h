@@ -7,6 +7,7 @@
 #define __TABLE_H__
 
 #include "Object.h"
+#include "Card.h"
 
 /** Table Class
  */
@@ -14,6 +15,10 @@ class Table : public Object
 {
 public:
 
+                orxU32          GetCardCount() const    {return u32CardCount;}
+                orxU32          GetWidth() const        {return u32Width;}
+                orxU32          GetHeight() const       {return u32Height;}
+                Card ** const   GetCards() const        {return apoCards;}
 
 protected:
 
@@ -26,6 +31,7 @@ private:
 
                 void            Deal();
 
+                Card          **apoCards;
                 orxU32          u32CardCount;
                 orxU32          u32Width;
                 orxU32          u32Height;
