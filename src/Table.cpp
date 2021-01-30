@@ -39,7 +39,7 @@ void Table::Deal()
     {
         roGame.DeleteObject(poCard);
     }
-
+    return;
     // Create cards
     orxConfig_PushSection(orxConfig_GetString("Deck"));
     for(orxU32 i = 0; i < u32CardCount; i += 2)
@@ -74,7 +74,6 @@ void Table::Deal()
             {
                 u32Count++;
                 apoCards[u32CardIndex]->SetPosition(vPos);
-                apoCards[u32CardIndex]->SetAnim("Show");
                 if(u32Count % u32Width == 0)
                 {
                     vPos.fX = vInit.fX;
