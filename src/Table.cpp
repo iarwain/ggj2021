@@ -64,7 +64,7 @@ void Table::Deal()
         orxU32      u32Count;
         orxConfig_GetVector("Padding", &vPadding);
         orxVector_Mul(&vSize, &apoCards[u32CardIndex]->GetSize(vSize), &apoCards[u32CardIndex]->GetScale(vScale));
-        orxVector_Set(&vPos, -0.5f * orxU2F(u32Width) * (vSize.fX + vPadding.fX) + (0.5f * vPadding.fX), -0.5f * orxU2F(u32Height) * (vSize.fY + vPadding.fY) + (0.5f * vPadding.fY), orxFLOAT_0);
+        orxVector_Set(&vPos, -0.5f * orxU2F(u32Width - 1) * (vSize.fX + vPadding.fX), -0.5f * orxU2F(u32Height - 1) * (vSize.fY + vPadding.fY), orxFLOAT_0);
         orxVector_Add(&vPadding, &vPadding, &vSize);
         orxVector_Copy(&vInit, &vPos);
 
