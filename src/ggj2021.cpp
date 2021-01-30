@@ -9,6 +9,7 @@
 
 #include "Object.h"
 #include "Card.h"
+#include "Table.h"
 #include "Player.h"
 
 #define orxARCHIVE_IMPL
@@ -81,6 +82,7 @@ void ggj2021::BindObjects()
     // Bind the Object class to the Object config section
     ScrollBindObject<Object>("Object");
     ScrollBindObject<Card>("Card");
+    ScrollBindObject<Table>("Table");
     ScrollBindObject<Player>("Player");
 }
 

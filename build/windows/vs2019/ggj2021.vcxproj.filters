@@ -2,19 +2,19 @@
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="src">
-      <UniqueIdentifier>{560C700E-4D83-4644-9B81-25E1862B6B28}</UniqueIdentifier>
+      <UniqueIdentifier>{95FC4522-47C3-2242-ADCB-65439AACF40B}</UniqueIdentifier>
     </Filter>
     <Filter Include="include">
-      <UniqueIdentifier>{E3BF3194-8B9A-E643-9B0E-607059B4CB63}</UniqueIdentifier>
+      <UniqueIdentifier>{E07F713B-47D2-644B-A2FC-6C42F6406798}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\Scroll">
-      <UniqueIdentifier>{CA3FAD1F-006A-914F-9797-C5839E89D387}</UniqueIdentifier>
+      <UniqueIdentifier>{EE95E029-F86F-4F46-A01A-52289B823BAF}</UniqueIdentifier>
     </Filter>
     <Filter Include="inline">
-      <UniqueIdentifier>{0E91C63F-64CB-2C47-A4CF-411E9F34F027}</UniqueIdentifier>
+      <UniqueIdentifier>{BB60E5B5-8C7F-0946-9AFB-09D90621836B}</UniqueIdentifier>
     </Filter>
     <Filter Include="config">
-      <UniqueIdentifier>{FC74CFCE-840B-9842-800B-B12166774D76}</UniqueIdentifier>
+      <UniqueIdentifier>{7DDC3E5C-90D2-EF4C-9697-F0F529CC9C7D}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +54,9 @@
     <None Include="..\..\..\data\config\SettingsTemplate.ini">
       <Filter>config</Filter>
     </None>
+    <None Include="..\..\..\data\config\table.ini">
+      <Filter>config</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\Card.h">
@@ -69,6 +72,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\Player.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\Table.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\Scroll\Scroll.h">
@@ -95,6 +101,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\Player.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Table.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

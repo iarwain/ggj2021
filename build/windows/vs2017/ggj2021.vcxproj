@@ -27,7 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{3D756D97-A1EB-B643-841F-4BDC2405CB50}</ProjectGuid>
+    <ProjectGuid>{97C93370-B102-E84E-8BC6-8C613DA512D6}</ProjectGuid>
     <RootNamespace>ggj2021</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
@@ -370,6 +370,7 @@
     <ClInclude Include="..\..\..\include\Object.h" />
     <ClInclude Include="..\..\..\include\orxArchive.h" />
     <ClInclude Include="..\..\..\include\Player.h" />
+    <ClInclude Include="..\..\..\include\Table.h" />
     <ClInclude Include="..\..\..\include\Scroll\Scroll.h" />
     <ClInclude Include="..\..\..\include\Scroll\ScrollBase.h" />
     <ClInclude Include="..\..\..\include\Scroll\ScrollEd.h" />
@@ -383,6 +384,8 @@
     <ClCompile Include="..\..\..\src\Object.cpp">
     </ClCompile>
     <ClCompile Include="..\..\..\src\Player.cpp">
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Table.cpp">
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -398,6 +401,7 @@
     <None Include="..\..\..\data\config\ggj2021p.ini" />
     <None Include="..\..\..\data\config\player.ini" />
     <None Include="..\..\..\data\config\SettingsTemplate.ini" />
+    <None Include="..\..\..\data\config\table.ini" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
