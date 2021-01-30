@@ -8,7 +8,7 @@
 
 #include "Object.h"
 
-/** Object Class
+/** Player Class
  */
 class Player : public Object
 {

@@ -8,7 +8,7 @@
 
 #include "Object.h"
 
-/** Object Class
+/** Card Class
  */
 class Card : public Object
 {
