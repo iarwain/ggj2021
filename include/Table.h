@@ -24,6 +24,8 @@ protected:
 
 private:
 
+                void            Deal();
+
                 orxU32          u32CardCount;
                 orxU32          u32Width;
                 orxU32          u32Height;
