@@ -36,6 +36,8 @@ protected:
 
 private:
     const       orxSTRING       GetConfigVar(const orxSTRING _zVar) const;
+
+                orxBOOL         bBusy               = {};
 };
 
 #endif // __PLAYER_H__

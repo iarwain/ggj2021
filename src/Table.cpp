@@ -78,7 +78,7 @@ void Table::Deal()
                 pstParent = orxObject_CreateFromConfig("Slot");
                 orxObject_SetPosition(pstParent, &vPos);
                 orxObject_SetOwner(pstParent, GetOrxObject());
-                orxObject_SetOwner(poCard->GetOrxObject(), pstParent);
+                orxObject_SetOwner(poCard->GetOrxObject(), GetOrxObject());
                 orxObject_SetParent(poCard->GetOrxObject(), pstParent);
                 astSlots[u32Count].poCard   = poCard;
                 astSlots[u32Count].pstParent= pstParent;
