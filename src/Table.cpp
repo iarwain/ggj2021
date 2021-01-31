@@ -169,7 +169,7 @@ void Table::Deal()
     }
 
     // Attract mode?
-    if(u32CardIndex == 0)
+    if((u32CardIndex == 0) && orxConfig_GetBool("IsAttract"))
     {
         orxClock_AddGlobalTimer(Attract, orxConfig_GetFloat("AttractDelay"), 1, this);
         bAttract = orxTRUE;
