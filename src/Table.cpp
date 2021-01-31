@@ -63,6 +63,7 @@ void Table::Update(const orxCLOCK_INFO &_rstInfo)
             ggj2021    &roGame = ggj2021::GetInstance();
             Player     *poWinner = orxNULL;
             orxCHAR     acName[128] = {};
+            orxBOOL     bTie = orxFALSE;
 
             for(Player *poPlayer = roGame.GetNextObject<Player>();
                 poPlayer;
@@ -73,7 +74,13 @@ void Table::Update(const orxCLOCK_INFO &_rstInfo)
                 || ((poPlayer->u32Score == poWinner->u32Score)
                  && (poPlayer->u32Picks < poWinner->u32Picks)))
                 {
-                    poWinner = poPlayer;
+                    poWinner    = poPlayer;
+                    bTie        = orxFALSE;
+                }
+                else if((poPlayer->u32Score == poWinner->u32Score)
+                     && (poPlayer->u32Picks == poWinner->u32Picks))
+                {
+                    bTie = orxTRUE;
                 }
                 poPlayer->astHands[0].poHand->Enable(orxFALSE);
                 poPlayer->astHands[1].poHand->Enable(orxFALSE);
@@ -81,9 +88,9 @@ void Table::Update(const orxCLOCK_INFO &_rstInfo)
 
             orxConfig_PushSection("GameOver");
             orxString_NPrint(acName, sizeof(acName) - 1, "%s", poWinner->GetModelName());
-            orxConfig_SetString("Winner", acName);
+            orxConfig_SetString("Winner", bTie ? "Tie" : acName);
             orxString_UpperCase(acName);
-            orxConfig_SetString("WINNER", acName);
+            orxConfig_SetString("WINNER", bTie ? "TIE" : acName);
             orxConfig_PopSection();
             roGame.CreateObject("GameOver");
         }
