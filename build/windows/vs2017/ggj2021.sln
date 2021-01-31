@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2017
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ggj2021", "ggj2021.vcxproj", "{97C93370-B102-E84E-8BC6-8C613DA512D6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LostEcho", "LostEcho.vcxproj", "{5730C6E6-82EF-6540-9C6E-1740A56D6DC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,18 +13,18 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{97C93370-B102-E84E-8BC6-8C613DA512D6}.Debug|x64.ActiveCfg = Debug|x64
-		{97C93370-B102-E84E-8BC6-8C613DA512D6}.Debug|x64.Build.0 = Debug|x64
-		{97C93370-B102-E84E-8BC6-8C613DA512D6}.Debug|Win32.ActiveCfg = Debug|Win32
-		{97C93370-B102-E84E-8BC6-8C613DA512D6}.Debug|Win32.Build.0 = Debug|Win32
-		{97C93370-B102-E84E-8BC6-8C613DA512D6}.Profile|x64.ActiveCfg = Profile|x64
-		{97C93370-B102-E84E-8BC6-8C613DA512D6}.Profile|x64.Build.0 = Profile|x64
-		{97C93370-B102-E84E-8BC6-8C613DA512D6}.Profile|Win32.ActiveCfg = Profile|Win32
-		{97C93370-B102-E84E-8BC6-8C613DA512D6}.Profile|Win32.Build.0 = Profile|Win32
-		{97C93370-B102-E84E-8BC6-8C613DA512D6}.Release|x64.ActiveCfg = Release|x64
-		{97C93370-B102-E84E-8BC6-8C613DA512D6}.Release|x64.Build.0 = Release|x64
-		{97C93370-B102-E84E-8BC6-8C613DA512D6}.Release|Win32.ActiveCfg = Release|Win32
-		{97C93370-B102-E84E-8BC6-8C613DA512D6}.Release|Win32.Build.0 = Release|Win32
+		{5730C6E6-82EF-6540-9C6E-1740A56D6DC5}.Debug|x64.ActiveCfg = Debug|x64
+		{5730C6E6-82EF-6540-9C6E-1740A56D6DC5}.Debug|x64.Build.0 = Debug|x64
+		{5730C6E6-82EF-6540-9C6E-1740A56D6DC5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5730C6E6-82EF-6540-9C6E-1740A56D6DC5}.Debug|Win32.Build.0 = Debug|Win32
+		{5730C6E6-82EF-6540-9C6E-1740A56D6DC5}.Profile|x64.ActiveCfg = Profile|x64
+		{5730C6E6-82EF-6540-9C6E-1740A56D6DC5}.Profile|x64.Build.0 = Profile|x64
+		{5730C6E6-82EF-6540-9C6E-1740A56D6DC5}.Profile|Win32.ActiveCfg = Profile|Win32
+		{5730C6E6-82EF-6540-9C6E-1740A56D6DC5}.Profile|Win32.Build.0 = Profile|Win32
+		{5730C6E6-82EF-6540-9C6E-1740A56D6DC5}.Release|x64.ActiveCfg = Release|x64
+		{5730C6E6-82EF-6540-9C6E-1740A56D6DC5}.Release|x64.Build.0 = Release|x64
+		{5730C6E6-82EF-6540-9C6E-1740A56D6DC5}.Release|Win32.ActiveCfg = Release|Win32
+		{5730C6E6-82EF-6540-9C6E-1740A56D6DC5}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

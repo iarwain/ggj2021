@@ -1,20 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="src">
-      <UniqueIdentifier>{B6CC7919-7700-C44D-B9CA-11AD46BD5D97}</UniqueIdentifier>
+      <UniqueIdentifier>{952E69D1-F377-CD4F-B373-BC653ACD0618}</UniqueIdentifier>
     </Filter>
     <Filter Include="include">
-      <UniqueIdentifier>{6DC61823-86ED-EF4A-9C38-96C326A601B6}</UniqueIdentifier>
+      <UniqueIdentifier>{D23EBA84-0734-604B-AD35-E15A4E64E8AB}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\Scroll">
-      <UniqueIdentifier>{48CD9AC6-2F4C-2443-97B4-825671497853}</UniqueIdentifier>
+      <UniqueIdentifier>{A51686A4-6A7A-B24B-82EB-1B07517047E3}</UniqueIdentifier>
     </Filter>
     <Filter Include="inline">
-      <UniqueIdentifier>{7232519D-E33C-6141-A7F5-112EA360D86C}</UniqueIdentifier>
+      <UniqueIdentifier>{D170D646-288B-4C46-94AB-20172BD27121}</UniqueIdentifier>
     </Filter>
     <Filter Include="config">
-      <UniqueIdentifier>{C4EE60C0-AC10-1F44-9BCC-BCF65A4F2F76}</UniqueIdentifier>
+      <UniqueIdentifier>{4341F59E-C1E9-7445-A98B-070C09E6E330}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data">
+      <UniqueIdentifier>{F49291E3-A662-D048-8ABE-0FE8F4F80B8F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data\resource">
+      <UniqueIdentifier>{411B4C06-DB84-7D44-9ABD-76D91CE3E27E}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -39,13 +45,28 @@
     <None Include="..\..\..\data\config\dev.ini">
       <Filter>config</Filter>
     </None>
+    <None Include="..\..\..\data\config\font.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\gameover.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\geodeck.ini">
+      <Filter>config</Filter>
+    </None>
     <None Include="..\..\..\data\config\ggj2021.ini">
       <Filter>config</Filter>
     </None>
-    <None Include="..\..\..\data\config\ggj2021d.ini">
+    <None Include="..\..\..\data\config\LostEcho.ini">
       <Filter>config</Filter>
     </None>
-    <None Include="..\..\..\data\config\ggj2021p.ini">
+    <None Include="..\..\..\data\config\LostEchod.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\LostEchop.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\pixeldeck.ini">
       <Filter>config</Filter>
     </None>
     <None Include="..\..\..\data\config\player.ini">
@@ -54,7 +75,16 @@
     <None Include="..\..\..\data\config\SettingsTemplate.ini">
       <Filter>config</Filter>
     </None>
+    <None Include="..\..\..\data\config\sound.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\startmenu.ini">
+      <Filter>config</Filter>
+    </None>
     <None Include="..\..\..\data\config\table.ini">
+      <Filter>config</Filter>
+    </None>
+    <None Include="..\..\..\data\config\tutorial.ini">
       <Filter>config</Filter>
     </None>
   </ItemGroup>
@@ -106,5 +136,10 @@
     <ClCompile Include="..\..\..\src\Table.cpp">
       <Filter>src</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\..\data\resource\ggj2021.rc">
+      <Filter>data\resource</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

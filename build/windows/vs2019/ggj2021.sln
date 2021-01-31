@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2019
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ggj2021", "ggj2021.vcxproj", "{700D7A45-BC45-984B-ABF5-051DCE314AE4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LostEcho", "LostEcho.vcxproj", "{A5DD2D8B-410D-8848-81D7-F14C972E2EB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,18 +13,18 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{700D7A45-BC45-984B-ABF5-051DCE314AE4}.Debug|x64.ActiveCfg = Debug|x64
-		{700D7A45-BC45-984B-ABF5-051DCE314AE4}.Debug|x64.Build.0 = Debug|x64
-		{700D7A45-BC45-984B-ABF5-051DCE314AE4}.Debug|Win32.ActiveCfg = Debug|Win32
-		{700D7A45-BC45-984B-ABF5-051DCE314AE4}.Debug|Win32.Build.0 = Debug|Win32
-		{700D7A45-BC45-984B-ABF5-051DCE314AE4}.Profile|x64.ActiveCfg = Profile|x64
-		{700D7A45-BC45-984B-ABF5-051DCE314AE4}.Profile|x64.Build.0 = Profile|x64
-		{700D7A45-BC45-984B-ABF5-051DCE314AE4}.Profile|Win32.ActiveCfg = Profile|Win32
-		{700D7A45-BC45-984B-ABF5-051DCE314AE4}.Profile|Win32.Build.0 = Profile|Win32
-		{700D7A45-BC45-984B-ABF5-051DCE314AE4}.Release|x64.ActiveCfg = Release|x64
-		{700D7A45-BC45-984B-ABF5-051DCE314AE4}.Release|x64.Build.0 = Release|x64
-		{700D7A45-BC45-984B-ABF5-051DCE314AE4}.Release|Win32.ActiveCfg = Release|Win32
-		{700D7A45-BC45-984B-ABF5-051DCE314AE4}.Release|Win32.Build.0 = Release|Win32
+		{A5DD2D8B-410D-8848-81D7-F14C972E2EB8}.Debug|x64.ActiveCfg = Debug|x64
+		{A5DD2D8B-410D-8848-81D7-F14C972E2EB8}.Debug|x64.Build.0 = Debug|x64
+		{A5DD2D8B-410D-8848-81D7-F14C972E2EB8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A5DD2D8B-410D-8848-81D7-F14C972E2EB8}.Debug|Win32.Build.0 = Debug|Win32
+		{A5DD2D8B-410D-8848-81D7-F14C972E2EB8}.Profile|x64.ActiveCfg = Profile|x64
+		{A5DD2D8B-410D-8848-81D7-F14C972E2EB8}.Profile|x64.Build.0 = Profile|x64
+		{A5DD2D8B-410D-8848-81D7-F14C972E2EB8}.Profile|Win32.ActiveCfg = Profile|Win32
+		{A5DD2D8B-410D-8848-81D7-F14C972E2EB8}.Profile|Win32.Build.0 = Profile|Win32
+		{A5DD2D8B-410D-8848-81D7-F14C972E2EB8}.Release|x64.ActiveCfg = Release|x64
+		{A5DD2D8B-410D-8848-81D7-F14C972E2EB8}.Release|x64.Build.0 = Release|x64
+		{A5DD2D8B-410D-8848-81D7-F14C972E2EB8}.Release|Win32.ActiveCfg = Release|Win32
+		{A5DD2D8B-410D-8848-81D7-F14C972E2EB8}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

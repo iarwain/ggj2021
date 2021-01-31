@@ -238,10 +238,10 @@ solution "ggj2021"
 
 
 --
--- Project: ggj2021
+-- Project: LostEcho
 --
 
-project "ggj2021"
+project "LostEcho"
 
     files
     {
@@ -251,6 +251,10 @@ project "ggj2021"
         "../include/**.inl",
         "../data/config/**.ini"
     }
+
+    configuration {"windows"}
+        files {"../data/resource/**.rc"}
+    configuration {}
 
     includedirs
     {
