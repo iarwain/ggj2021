@@ -6,11 +6,23 @@
 #include "Table.h"
 #include "Player.h"
 
+void orxFASTCALL Attract(const orxCLOCK_INFO *_pstClockInfo, void *_pContext)
+{
+    Table *poTable = (Table *)_pContext;
+
+    Card *poCard = poTable->astSlots[orxMath_GetRandomU32(0, poTable->u32Count - 1)].poCard;
+
+    poCard->SetAnim("Show");
+    poTable->PushConfigSection();
+    orxClock_AddGlobalTimer(Attract, orxConfig_GetFloat("AttractDelay"), 1, poTable);
+    poTable->PopConfigSection();
+}
+
 void Table::OnCreate()
 {
     // Init variables
     orxConfig_SetBool("IsTable", orxTRUE);
-    u32Count    = orxConfig_GetU32("CardCount");
+    u32Count    = orxConfig_GetU32("Count");
     u32Width    = ((orxU32)orxMath_Ceil(orxMath_Sqrt(orxU2F(u32Count)))) & ~1;
     u32Height   = u32Count / u32Width;
     u32Count    = u32Width * u32Height;
@@ -25,11 +37,14 @@ void Table::OnDelete()
 {
     // Clear variables
     orxMemory_Free(astSlots);
+
+    // Remove attract mode
+    orxClock_RemoveGlobalTimer(Attract, -orxFLOAT_1, orxNULL);
 }
 
 void Table::Update(const orxCLOCK_INFO &_rstInfo)
 {
-    if(!bGameOver)
+    if(!bGameOver && !bAttract)
     {
         // Check cards
         bGameOver = orxTRUE;
@@ -85,14 +100,8 @@ void Table::Update(const orxCLOCK_INFO &_rstInfo)
 void Table::Deal()
 {
     ggj2021    &roGame = ggj2021::GetInstance();
-    Card       *poCard, *apoShuffleCards[1024] = {};
+    Card       *apoShuffleCards[1024] = {};
     orxU32      u32CardIndex = 0;
-
-    // Delete all cards
-    while((poCard = roGame.GetNextObject<Card>()) != orxNULL)
-    {
-        roGame.DeleteObject(poCard);
-    }
 
     // Create cards
     orxConfig_PushSection(orxConfig_GetString("Deck"));
@@ -159,12 +168,10 @@ void Table::Deal()
         poPlayer->Select(1, u32CardIndex++);
     }
 
-    // Showcase?
+    // Attract mode?
     if(u32CardIndex == 0)
     {
-        for(orxU32 i = 0; i < u32Count; i++)
-        {
-            astSlots[i].poCard->SetAnim("Show");
-        }
+        orxClock_AddGlobalTimer(Attract, orxConfig_GetFloat("AttractDelay"), 1, this);
+        bAttract = orxTRUE;
     }
 }
