@@ -27,6 +27,7 @@ public:
                 orxBOOL         bGameOver               = orxFALSE;
                 orxBOOL         bAttract                = orxFALSE;
                 orxBOOL         bSelect                 = orxFALSE;
+                orxBOOL         bSolo                   = orxFALSE;
 
 
 protected:

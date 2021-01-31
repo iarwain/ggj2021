@@ -281,4 +281,12 @@ void Table::Deal()
             bSelect = orxTRUE;
         }
     }
+    else
+    {
+        // Solo?
+        if(u32CardIndex == 2)
+        {
+            bSolo = orxTRUE;
+        }
+    }
 }

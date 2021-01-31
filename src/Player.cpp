@@ -130,7 +130,10 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
                     if(orxInput_HasBeenActivated("Drop") || orxInput_HasBeenActivated("Shuffle"))
                     {
                         // Shuffle?
-                        if(orxInput_HasBeenActivated("Shuffle"))
+                        if(((poTable->bSolo)
+                         && (orxConfig_GetBool("Shuffle?")))
+                        || ((!poTable->bSolo)
+                         && (orxInput_HasBeenActivated("Shuffle"))))
                         {
                             orxVECTOR vPos;
                             orxObject_Attach(poLeftCard->GetOrxObject(), poTable->astSlots[astHands[1].u32SlotIndex].pstParent);
