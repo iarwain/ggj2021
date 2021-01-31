@@ -94,13 +94,20 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
                     // Drop/Shuffle?
                     if(orxInput_HasBeenActivated("Drop") || orxInput_HasBeenActivated("Shuffle"))
                     {
-                        orxVECTOR vPos, vOffset;
+                        orxVECTOR   vPos, vOffset;
+                        orxOBJECT  *pstEmptySlot;
                         orxObject_Attach(poLeftCard->GetOrxObject(), GetOrxObject());
                         poTable->astSlots[astHands[0].u32SlotIndex].poCard = orxNULL;
                         orxObject_AddFX(poTable->astSlots[astHands[0].u32SlotIndex].pstParent, "Drop");
                         orxObject_Attach(poRightCard->GetOrxObject(), GetOrxObject());
                         poTable->astSlots[astHands[1].u32SlotIndex].poCard = orxNULL;
                         orxObject_AddFX(poTable->astSlots[astHands[1].u32SlotIndex].pstParent, "Drop");
+                        pstEmptySlot = orxObject_CreateFromConfig("EmptySlot");
+                        orxObject_SetParent(pstEmptySlot, poTable->astSlots[astHands[0].u32SlotIndex].pstParent);
+                        orxObject_SetOwner(pstEmptySlot, poTable->astSlots[astHands[0].u32SlotIndex].pstParent);
+                        pstEmptySlot = orxObject_CreateFromConfig("EmptySlot");
+                        orxObject_SetParent(pstEmptySlot, poTable->astSlots[astHands[1].u32SlotIndex].pstParent);
+                        orxObject_SetOwner(pstEmptySlot, poTable->astSlots[astHands[1].u32SlotIndex].pstParent);
 
                         orxVector_Mulf(&vOffset, orxConfig_GetVector("Offset", &vOffset), orxU2F(2 * u32Score));
                         orxConfig_PushSection("MoveLeft");

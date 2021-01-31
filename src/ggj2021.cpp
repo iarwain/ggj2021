@@ -51,7 +51,7 @@ void ggj2021::Update(const orxCLOCK_INFO &_rstInfo)
         {
             DeleteObject(poObject);
         }
-        CreateObject("Title");
+        CreateObject("Select");
     }
 }
 
