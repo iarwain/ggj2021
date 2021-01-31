@@ -8,9 +8,8 @@
 
 void orxFASTCALL Attract(const orxCLOCK_INFO *_pstClockInfo, void *_pContext)
 {
-    Table *poTable = (Table *)_pContext;
-
-    Card *poCard = poTable->astSlots[orxMath_GetRandomU32(0, poTable->u32Count - 1)].poCard;
+    Table *poTable  = (Table *)_pContext;
+    Card *poCard    = poTable->astSlots[orxMath_GetRandomU32(0, poTable->u32Count - 1)].poCard;
 
     poCard->SetAnim("Show");
     poTable->PushConfigSection();
@@ -22,12 +21,6 @@ void Table::OnCreate()
 {
     // Init variables
     orxConfig_SetBool("IsTable", orxTRUE);
-    u32Count    = orxConfig_GetU32("Count");
-    u32Width    = ((orxU32)orxMath_Ceil(orxMath_Sqrt(orxU2F(u32Count)))) & ~1;
-    u32Height   = u32Count / u32Width;
-    u32Count    = u32Width * u32Height;
-    bGameOver   = orxFALSE;
-    astSlots    = (Slot *) orxMemory_Allocate(u32Count * sizeof(Slot), orxMEMORY_TYPE_MAIN);
 
     // Deal cards
     Deal();
@@ -35,71 +28,150 @@ void Table::OnCreate()
 
 void Table::OnDelete()
 {
-    // Clear variables
+    // Clear slots
     orxMemory_Free(astSlots);
 
     // Remove attract mode
     orxClock_RemoveGlobalTimer(Attract, -orxFLOAT_1, orxNULL);
+
+    if(bSelect)
+    {
+        orxInput_SelectSet("MainInput");
+    }
 }
 
 void Table::Update(const orxCLOCK_INFO &_rstInfo)
 {
-    if(!bGameOver && !bAttract)
+    if(!bAttract)
     {
-        // Check cards
-        bGameOver = orxTRUE;
-        for(orxU32 i = 0; i < u32Count; i++)
+        if(bSelect)
         {
-            if(astSlots[i].poCard != orxNULL)
+            orxBOOL bUpdate = orxFALSE;
+            orxU32  u32Decks, u32Counts, u32SelectDeck, u32SelectCount;
+
+            u32Decks    = orxConfig_GetListCount("Decks");
+            u32Counts   =  orxConfig_GetListCount("Counts");
+
+            PushConfigSection();
+
+            if(orxInput_HasBeenActivated("PreviousCount"))
             {
-                bGameOver = orxFALSE;
-                break;
+                orxConfig_SetU32("SelectCount", (orxConfig_GetU32("SelectCount") - 1 + u32Counts) % u32Counts);
+                bUpdate = orxTRUE;
             }
-        }
-
-        // Game Over?
-        if(bGameOver)
-        {
-            ggj2021    &roGame = ggj2021::GetInstance();
-            Player     *poWinner = orxNULL;
-            orxCHAR     acName[128] = {};
-            orxBOOL     bTie = orxFALSE;
-
-            for(Player *poPlayer = roGame.GetNextObject<Player>();
-                poPlayer;
-                poPlayer = roGame.GetNextObject<Player>(poPlayer))
+            else if(orxInput_HasBeenActivated("NextCount"))
             {
-                if((!poWinner)
-                || (poPlayer->u32Score > poWinner->u32Score)
-                || ((poPlayer->u32Score == poWinner->u32Score)
-                 && (poPlayer->u32Picks < poWinner->u32Picks)))
-                {
-                    poWinner    = poPlayer;
-                    bTie        = orxFALSE;
-                }
-                else if((poPlayer->u32Score == poWinner->u32Score)
-                     && (poPlayer->u32Picks == poWinner->u32Picks))
-                {
-                    bTie = orxTRUE;
-                }
-                poPlayer->astHands[0].poHand->Enable(orxFALSE);
-                poPlayer->astHands[1].poHand->Enable(orxFALSE);
+                orxConfig_SetU32("SelectCount", (orxConfig_GetU32("SelectCount") + 1) % u32Counts);
+                bUpdate = orxTRUE;
+            }
+            else if(orxInput_HasBeenActivated("PreviousDeck"))
+            {
+                orxConfig_SetU32("SelectDeck", (orxConfig_GetU32("SelectDeck") - 1 + u32Decks) % u32Decks);
+                bUpdate = orxTRUE;
+            }
+            else if(orxInput_HasBeenActivated("NextDeck"))
+            {
+                orxConfig_SetU32("SelectDeck", (orxConfig_GetU32("SelectDeck") + 1) % u32Decks);
+                bUpdate = orxTRUE;
             }
 
-            orxConfig_PushSection("GameOver");
-            orxString_NPrint(acName, sizeof(acName) - 1, "%s", poWinner->GetModelName());
-            orxConfig_SetString("Winner", bTie ? "Tie" : acName);
-            orxString_UpperCase(acName);
-            orxConfig_SetString("WINNER", bTie ? "TIE" : acName);
-            orxConfig_PopSection();
-            roGame.CreateObject("GameOver");
+            u32SelectCount  = orxConfig_GetU32("SelectCount");
+            u32SelectDeck   = orxConfig_GetU32("SelectDeck");
+
+            PopConfigSection();
+
+            if(bUpdate)
+            {
+                orxConfig_SetString("Deck", orxConfig_GetListString("Decks", u32SelectDeck));
+                orxConfig_SetString("Count", orxConfig_GetListString("Counts", u32SelectCount));
+                PushConfigSection();
+                Deal();
+                PopConfigSection();
+            }
+
+            if(orxInput_HasBeenActivated("1P"))
+            {
+                orxConfig_SetParent("Scene", "1P");
+            }
+            else if(orxInput_HasBeenActivated("2P"))
+            {
+                orxConfig_SetParent("Scene", "2P");
+            }
+            else if(orxInput_HasBeenActivated("3P"))
+            {
+                orxConfig_SetParent("Scene", "3P");
+            }
+            else if(orxInput_HasBeenActivated("4P"))
+            {
+                orxConfig_SetParent("Scene", "4P");
+            }
+
+            if(orxInput_HasBeenActivated("Start"))
+            {
+                orxObject_Delete(orxOBJECT(orxObject_GetOwner(GetOrxObject())));
+                ggj2021::GetInstance().CreateObject("Scene");
+            }
         }
-    }
-    else
-    {
-        if(orxInput_HasBeenActivated("Restart"))
+        else
         {
-            orxInput_SetValue("Reset", orxFLOAT_1);
+            if(!bGameOver)
+            {
+                // Check cards
+                bGameOver = orxTRUE;
+                for(orxU32 i = 0; i < u32Count; i++)
+                {
+                    if(astSlots[i].poCard != orxNULL)
+                    {
+                        bGameOver = orxFALSE;
+                        break;
+                    }
+                }
+
+                // Game Over?
+                if(bGameOver)
+                {
+                    ggj2021    &roGame = ggj2021::GetInstance();
+                    Player     *poWinner = orxNULL;
+                    orxCHAR     acName[128] = {};
+                    orxBOOL     bTie = orxFALSE;
+
+                    for(Player *poPlayer = roGame.GetNextObject<Player>();
+                        poPlayer;
+                        poPlayer = roGame.GetNextObject<Player>(poPlayer))
+                    {
+                        if((!poWinner)
+                        || (poPlayer->u32Score > poWinner->u32Score)
+                        || ((poPlayer->u32Score == poWinner->u32Score)
+                         && (poPlayer->u32Picks < poWinner->u32Picks)))
+                        {
+                            poWinner    = poPlayer;
+                            bTie        = orxFALSE;
+                        }
+                        else if((poPlayer->u32Score == poWinner->u32Score)
+                             && (poPlayer->u32Picks == poWinner->u32Picks))
+                        {
+                            bTie = orxTRUE;
+                        }
+                        poPlayer->astHands[0].poHand->Enable(orxFALSE);
+                        poPlayer->astHands[1].poHand->Enable(orxFALSE);
+                    }
+
+                    orxConfig_PushSection("GameOver");
+                    orxString_NPrint(acName, sizeof(acName) - 1, "%s", poWinner->GetModelName());
+                    orxConfig_SetString("Winner", bTie ? "Tie" : acName);
+                    orxString_UpperCase(acName);
+                    orxConfig_SetString("WINNER", bTie ? "TIE" : acName);
+                    orxConfig_PopSection();
+                    roGame.CreateObject("GameOver");
+                }
+            }
+            else
+            {
+                if(orxInput_HasBeenActivated("Restart"))
+                {
+                    orxInput_SetValue("Reset", orxFLOAT_1);
+                }
+            }
         }
     }
 }
@@ -109,6 +181,24 @@ void Table::Deal()
     ggj2021    &roGame = ggj2021::GetInstance();
     Card       *apoShuffleCards[1024] = {};
     orxU32      u32CardIndex = 0;
+
+    // Delete all cards
+    if(astSlots)
+    {
+        for(orxU32 i = 0; i < u32Count; i++)
+        {
+            roGame.DeleteObject(astSlots[i].poCard);
+        }
+        orxMemory_Free(astSlots);
+    }
+
+    // Inits variables
+    u32Count    = orxConfig_GetU32("Count");
+    u32Width    = ((orxU32)orxMath_Ceil(orxMath_Sqrt(orxU2F(u32Count)))) & ~1;
+    u32Height   = u32Count / u32Width;
+    u32Count    = u32Width * u32Height;
+    bGameOver   = orxFALSE;
+    astSlots    = (Slot *) orxMemory_Allocate(u32Count * sizeof(Slot), orxMEMORY_TYPE_MAIN);
 
     // Create cards
     orxConfig_PushSection(orxConfig_GetString("Deck"));
@@ -190,6 +280,9 @@ void Table::Deal()
             {
                 astSlots[i].poCard->SetAnim("Show");
             }
+            orxInput_SelectSet("SelectInput");
+            orxInput_SetValue("Start", orxFLOAT_0);
+            bSelect = orxTRUE;
         }
     }
 }

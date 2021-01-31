@@ -26,6 +26,7 @@ public:
                 orxU32          u32Height               = 0;
                 orxBOOL         bGameOver               = orxFALSE;
                 orxBOOL         bAttract                = orxFALSE;
+                orxBOOL         bSelect                 = orxFALSE;
 
 
 protected:
