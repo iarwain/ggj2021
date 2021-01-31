@@ -11,7 +11,7 @@ void Table::OnCreate()
     // Init variables
     orxConfig_SetBool("IsTable", orxTRUE);
     u32CardCount    = orxConfig_GetU32("CardCount");
-    u32Width        = ((orxU32)orxMath_Sqrt(orxU2F(u32CardCount))) & ~1;
+    u32Width        = ((orxU32)orxMath_Ceil(orxMath_Sqrt(orxU2F(u32CardCount)))) & ~1;
     u32Height       = u32CardCount / u32Width;
     u32CardCount    = u32Width * u32Height;
     astSlots        = (Slot *) orxMemory_Allocate(u32CardCount * sizeof(Slot), orxMEMORY_TYPE_MAIN);

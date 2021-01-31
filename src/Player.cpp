@@ -34,7 +34,10 @@ void Player::OnCreate()
     ggj2021 &roGame = ggj2021::GetInstance();
 
     // Init variables
+    u32Score = u32Picks = 0;
     orxConfig_SetBool("IsPlayer", orxTRUE);
+    orxConfig_SetU32("Score", u32Score);
+    orxConfig_SetU32("Picks", u32Picks);
     for(orxU32 i = 0; i < 2; i++)
     {
         astHands[i].poHand = roGame.CreateObject<Object>(orxConfig_GetString("Hand"));
@@ -63,50 +66,93 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
     // Busy?
     if(bBusy)
     {
-        // Drop/Shuffle?
-        if(orxInput_HasBeenActivated("Drop") || orxInput_HasBeenActivated("Shuffle"))
+        Card *poLeftCard, *poRightCard;
+
+        poLeftCard  = poTable->astSlots[astHands[0].u32SlotIndex].poCard;
+        poRightCard = poTable->astSlots[astHands[1].u32SlotIndex].poCard;
+
+        if((poLeftCard != poRightCard)
+        && (poLeftCard)
+        && (poRightCard)
+        && (poLeftCard->IsVisible())
+        && (poRightCard->IsVisible()))
         {
-            Card *poLeftCard, *poRightCard;
-
-            poLeftCard  = poTable->astSlots[astHands[0].u32SlotIndex].poCard;
-            poRightCard = poTable->astSlots[astHands[1].u32SlotIndex].poCard;
-
-            if((astHands[0].u32SlotIndex != orxU32_UNDEFINED)
-            && (astHands[1].u32SlotIndex != orxU32_UNDEFINED)
-            && (astHands[0].u32SlotIndex != astHands[1].u32SlotIndex)
-            && (poLeftCard->IsVisible())
-            && (poRightCard->IsVisible()))
+            // Valid?
+            if(!orxString_Compare(poLeftCard->GetModelName(), poRightCard->GetModelName()))
             {
-                // Shuffle?
-                if(orxInput_HasBeenActivated("Shuffle"))
+                // Should score?
+                if(!bScore)
                 {
-                    orxVECTOR vPos;
-                    orxObject_Detach(poLeftCard->GetOrxObject());
-                    orxObject_Attach(poLeftCard->GetOrxObject(), poTable->astSlots[astHands[1].u32SlotIndex].pstParent);
-                    poTable->astSlots[astHands[1].u32SlotIndex].poCard = poLeftCard;
-                    orxObject_Detach(poRightCard->GetOrxObject());
-                    orxObject_Attach(poRightCard->GetOrxObject(), poTable->astSlots[astHands[0].u32SlotIndex].pstParent);
-                    poTable->astSlots[astHands[0].u32SlotIndex].poCard = poRightCard;
+                    // Score
+                    AddTrack("ScorePoint");
+                    orxConfig_SetU32("Score", ++u32Score);
+                    bScore = orxTRUE;
+                }
 
+                // Drop/Shuffle?
+                if(orxInput_HasBeenActivated("Drop") || orxInput_HasBeenActivated("Shuffle"))
+                {
+                    orxVECTOR vPos, vOffset;
+                    orxObject_Attach(poLeftCard->GetOrxObject(), GetOrxObject());
+                    poTable->astSlots[astHands[0].u32SlotIndex].poCard = orxNULL;
+                    orxObject_AddFX(poTable->astSlots[astHands[0].u32SlotIndex].pstParent, "Drop");
+                    orxObject_Attach(poRightCard->GetOrxObject(), GetOrxObject());
+                    poTable->astSlots[astHands[1].u32SlotIndex].poCard = orxNULL;
+                    orxObject_AddFX(poTable->astSlots[astHands[1].u32SlotIndex].pstParent, "Drop");
+
+                    orxVector_Mulf(&vOffset, orxConfig_GetVector("Offset", &vOffset), orxU2F(2 * u32Score));
                     orxConfig_PushSection("MoveLeft");
                     poLeftCard->GetPosition(vPos);
-                    orxConfig_SetVector("EndValue", orxVector_Neg(&vPos, &vPos));
+                    orxConfig_SetVector("EndValue", orxVector_Add(&vPos, orxVector_Neg(&vPos, &vPos), &vOffset));
                     orxConfig_PopSection();
-                    poLeftCard->SetAnim("ShuffleLeft");
+                    poLeftCard->SetAnim("RevealLeft");
+                    orxVector_Mulf(&vOffset, orxConfig_GetVector("Offset", &vOffset), orxU2F(2 * u32Score + 1));
                     orxConfig_PushSection("MoveRight");
                     poRightCard->GetPosition(vPos);
-                    orxConfig_SetVector("EndValue", orxVector_Neg(&vPos, &vPos));
+                    orxConfig_SetVector("EndValue", orxVector_Add(&vPos, orxVector_Neg(&vPos, &vPos), &vOffset));
                     orxConfig_PopSection();
-                    poRightCard->SetAnim("ShuffleRight");
+                    poRightCard->SetAnim("RevealRight");
+                    bBusy = orxFALSE;
                 }
-                else
-                {
-                    poLeftCard->SetAnim("HideLoud");
-                    poRightCard->SetAnim("Hide");
-                }
-                bBusy = orxFALSE;
             }
             else
+            {
+                // Drop/Shuffle?
+                if(orxInput_HasBeenActivated("Drop") || orxInput_HasBeenActivated("Shuffle"))
+                {
+                    // Shuffle?
+                    if(orxInput_HasBeenActivated("Shuffle"))
+                    {
+                        orxVECTOR vPos;
+                        orxObject_Attach(poLeftCard->GetOrxObject(), poTable->astSlots[astHands[1].u32SlotIndex].pstParent);
+                        poTable->astSlots[astHands[1].u32SlotIndex].poCard = poLeftCard;
+                        orxObject_Attach(poRightCard->GetOrxObject(), poTable->astSlots[astHands[0].u32SlotIndex].pstParent);
+                        poTable->astSlots[astHands[0].u32SlotIndex].poCard = poRightCard;
+
+                        orxConfig_PushSection("MoveLeft");
+                        poLeftCard->GetPosition(vPos);
+                        orxConfig_SetVector("EndValue", orxVector_Neg(&vPos, &vPos));
+                        orxConfig_PopSection();
+                        poLeftCard->SetAnim("ShuffleLeft");
+                        orxConfig_PushSection("MoveRight");
+                        poRightCard->GetPosition(vPos);
+                        orxConfig_SetVector("EndValue", orxVector_Neg(&vPos, &vPos));
+                        orxConfig_PopSection();
+                        poRightCard->SetAnim("ShuffleRight");
+                    }
+                    else
+                    {
+                        poLeftCard->SetAnim("HideLoud");
+                        poRightCard->SetAnim("Hide");
+                    }
+                    bBusy = orxFALSE;
+                }
+            }
+        }
+        else
+        {
+            // Drop/Shuffle?
+            if(orxInput_HasBeenActivated("Drop") || orxInput_HasBeenActivated("Shuffle"))
             {
                 AddTrack("Error");
             }
@@ -178,15 +224,22 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
         // Pick?
         if(orxInput_HasBeenActivated("Pick"))
         {
-            if((astHands[0].u32SlotIndex != orxU32_UNDEFINED)
-            && (astHands[1].u32SlotIndex != orxU32_UNDEFINED)
-            && (astHands[0].u32SlotIndex != astHands[1].u32SlotIndex)
-            && (poTable->astSlots[astHands[0].u32SlotIndex].poCard->IsHidden())
-            && (poTable->astSlots[astHands[1].u32SlotIndex].poCard->IsHidden()))
+            Card *poLeftCard, *poRightCard;
+
+            poLeftCard  = poTable->astSlots[astHands[0].u32SlotIndex].poCard;
+            poRightCard = poTable->astSlots[astHands[1].u32SlotIndex].poCard;
+
+            if((poLeftCard != poRightCard)
+            && (poLeftCard)
+            && (poRightCard)
+            && (poLeftCard->IsHidden())
+            && (poRightCard->IsHidden()))
             {
-                poTable->astSlots[astHands[0].u32SlotIndex].poCard->SetAnim("ShowLoud");
-                poTable->astSlots[astHands[1].u32SlotIndex].poCard->SetAnim("Show");
-                bBusy = orxTRUE;
+                poLeftCard->SetAnim("ShowLoud");
+                poRightCard->SetAnim("Show");
+                orxConfig_SetU32("Picks", ++u32Picks);
+                bBusy   = orxTRUE;
+                bScore  = orxFALSE;
             }
             else
             {

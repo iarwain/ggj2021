@@ -37,7 +37,10 @@ protected:
 private:
     const       orxSTRING       GetConfigVar(const orxSTRING _zVar) const;
 
+                orxU32          u32Score            = 0;
+                orxU32          u32Picks            = 0;
                 orxBOOL         bBusy               = {};
+                orxBOOL         bScore              = {};
 };
 
 #endif // __PLAYER_H__
