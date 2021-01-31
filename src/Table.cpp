@@ -175,10 +175,21 @@ void Table::Deal()
         poPlayer->Select(1, u32CardIndex++);
     }
 
-    // Attract mode?
-    if((u32CardIndex == 0) && orxConfig_GetBool("IsAttract"))
+    // No players?
+    if(u32CardIndex == 0)
     {
-        orxClock_AddGlobalTimer(Attract, orxConfig_GetFloat("AttractDelay"), 1, this);
-        bAttract = orxTRUE;
+        // Attract mode?
+        if(orxConfig_GetBool("IsAttract"))
+        {
+            orxClock_AddGlobalTimer(Attract, orxConfig_GetFloat("AttractDelay"), 1, this);
+            bAttract = orxTRUE;
+        }
+        else
+        {
+            for(orxU32 i = 0; i < u32Count; i++)
+            {
+                astSlots[i].poCard->SetAnim("Show");
+            }
+        }
     }
 }
