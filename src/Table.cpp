@@ -88,7 +88,6 @@ void Table::Update(const orxCLOCK_INFO &_rstInfo)
                 Deal();
                 PopConfigSection();
             }
-
             if(orxInput_HasBeenActivated("1P"))
             {
                 orxConfig_SetParent("Scene", "1P");
@@ -105,11 +104,9 @@ void Table::Update(const orxCLOCK_INFO &_rstInfo)
             {
                 orxConfig_SetParent("Scene", "4P");
             }
-
             if(orxInput_HasBeenActivated("Start"))
             {
-                orxObject_Delete(orxOBJECT(orxObject_GetOwner(GetOrxObject())));
-                ggj2021::GetInstance().CreateObject("Scene");
+                orxObject_AddTimeLineTrack(orxOBJECT(orxObject_GetOwner(GetOrxObject())), "PressStartTrack");
             }
         }
         else
