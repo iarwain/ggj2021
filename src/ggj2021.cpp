@@ -68,6 +68,14 @@ orxSTATUS ggj2021::Init()
         orxViewport_CreateFromConfig(orxConfig_GetListString("ViewportList", i));
     }
 
+    // Enable all sets
+    orxConfig_PushSection("Input");
+    for(orxS32 i = 0, iCount = orxConfig_GetListCount("SetList"); i < iCount; i++)
+    {
+        orxInput_EnableSet(orxConfig_GetListString("SetList", i), orxTRUE);
+    }
+    orxConfig_PopSection();
+
     // Go to title
     CreateObject("Title");
 

@@ -281,7 +281,6 @@ void Table::Deal()
                 astSlots[i].poCard->SetAnim("Show");
             }
             orxInput_SelectSet("SelectInput");
-            orxInput_SetValue("Start", orxFLOAT_0);
             bSelect = orxTRUE;
         }
     }
