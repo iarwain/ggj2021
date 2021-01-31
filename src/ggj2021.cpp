@@ -30,6 +30,9 @@ void ggj2021::Update(const orxCLOCK_INFO &_rstInfo)
     // Should quit?
     if(orxInput_IsActive("Quit"))
     {
+        // Should restart?
+        sbRestart = orxInput_HasBeenActivated("Reset");
+
         // Send close event
         orxEvent_SendShort(orxEVENT_TYPE_SYSTEM, orxSYSTEM_EVENT_CLOSE);
     }
@@ -37,6 +40,18 @@ void ggj2021::Update(const orxCLOCK_INFO &_rstInfo)
     else if(orxInput_HasBeenActivated("Screenshot"))
     {
         orxScreenshot_Capture();
+    }
+    // Reset?
+    else if(orxInput_HasBeenActivated("Reset"))
+    {
+        PauseGame(orxFALSE);
+        for(ScrollObject *poObject = GetNextObject();
+            poObject;
+            poObject = GetNextObject())
+        {
+            DeleteObject(poObject);
+        }
+        CreateObject("Title");
     }
 }
 
