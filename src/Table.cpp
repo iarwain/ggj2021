@@ -158,6 +158,8 @@ void Table::Update(const orxCLOCK_INFO &_rstInfo)
                     orxConfig_SetString("Winner", bTie ? "Tie" : acName);
                     orxString_UpperCase(acName);
                     orxConfig_SetString("WINNER", bTie ? "TIE" : acName);
+                    orxConfig_SetU32("Score", poWinner->u32Score);
+                    orxConfig_SetU32("Picks", poWinner->u32Picks);
                     orxConfig_PopSection();
                     roGame.CreateObject("GameOver");
                 }
