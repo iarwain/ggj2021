@@ -37,7 +37,7 @@ void Player::OnCreate()
     orxConfig_SetBool("IsPlayer", orxTRUE);
     for(orxU32 i = 0; i < 2; i++)
     {
-        astHands[i].poHand          = roGame.CreateObject<Object>("Hand");
+        astHands[i].poHand = roGame.CreateObject<Object>(orxConfig_GetString("Hand"));
         orxObject_SetOwner(astHands[i].poHand->GetOrxObject(), GetOrxObject());
         astHands[i].poHand->SetAnim((i & 1) ? "Right" : "Left");
         Select(i, orxU32_UNDEFINED);
