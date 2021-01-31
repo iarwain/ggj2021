@@ -101,7 +101,7 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
                 }
                 else
                 {
-                    poLeftCard->SetAnim("Hide");
+                    poLeftCard->SetAnim("HideLoud");
                     poRightCard->SetAnim("Hide");
                 }
                 bBusy = orxFALSE;
@@ -170,6 +170,7 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
                 if(u32NewSlotIndex != astHands[i].u32SlotIndex)
                 {
                     Select(i, u32NewSlotIndex);
+                    AddTrack("Move");
                 }
             }
         }
@@ -183,7 +184,7 @@ void Player::Update(const orxCLOCK_INFO &_rstInfo)
             && (poTable->astSlots[astHands[0].u32SlotIndex].poCard->IsHidden())
             && (poTable->astSlots[astHands[1].u32SlotIndex].poCard->IsHidden()))
             {
-                poTable->astSlots[astHands[0].u32SlotIndex].poCard->SetAnim("Show");
+                poTable->astSlots[astHands[0].u32SlotIndex].poCard->SetAnim("ShowLoud");
                 poTable->astSlots[astHands[1].u32SlotIndex].poCard->SetAnim("Show");
                 bBusy = orxTRUE;
             }
