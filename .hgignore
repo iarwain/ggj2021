@@ -9,3 +9,4 @@ build/windows/**/.vs/*
 **.dat
 bin/**.png
 **.sublime-workspace
+archive/**

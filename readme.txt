@@ -4,8 +4,9 @@
 
 A Global Game Jam 2021 by Aumniez & Iarwain.
 
-Can be played in solo (high score mode,
-with random auto-shuffle) or multiplayer.
+Can be played in solo (high score mode, with
+random auto-shuffle) or up to 4 players
+(fast-paced real-time competitive mode).
 
 Frank Brizuela
 Romain Killian
