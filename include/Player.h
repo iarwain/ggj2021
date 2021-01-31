@@ -26,6 +26,9 @@ public:
 
                 void            Select(orxU32 _u32HandIndex, orxU32 _u32SlotIndex = orxU32_UNDEFINED);
 
+                orxU32          u32Score = 0;
+                orxU32          u32Picks = 0;
+
 
 protected:
 
@@ -37,8 +40,6 @@ protected:
 private:
     const       orxSTRING       GetConfigVar(const orxSTRING _zVar) const;
 
-                orxU32          u32Score            = 0;
-                orxU32          u32Picks            = 0;
                 orxBOOL         bBusy               = {};
                 orxBOOL         bScore              = {};
 };

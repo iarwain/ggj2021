@@ -21,9 +21,10 @@ public:
     };
 
                 Slot           *astSlots                = {};
-                orxU32          u32CardCount            = 0;
+                orxU32          u32Count                = 0;
                 orxU32          u32Width                = 0;
                 orxU32          u32Height               = 0;
+                orxBOOL         bGameOver               = orxFALSE;
 
 
 protected:

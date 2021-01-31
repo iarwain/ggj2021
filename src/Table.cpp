@@ -10,11 +10,12 @@ void Table::OnCreate()
 {
     // Init variables
     orxConfig_SetBool("IsTable", orxTRUE);
-    u32CardCount    = orxConfig_GetU32("CardCount");
-    u32Width        = ((orxU32)orxMath_Ceil(orxMath_Sqrt(orxU2F(u32CardCount)))) & ~1;
-    u32Height       = u32CardCount / u32Width;
-    u32CardCount    = u32Width * u32Height;
-    astSlots        = (Slot *) orxMemory_Allocate(u32CardCount * sizeof(Slot), orxMEMORY_TYPE_MAIN);
+    u32Count    = orxConfig_GetU32("CardCount");
+    u32Width    = ((orxU32)orxMath_Ceil(orxMath_Sqrt(orxU2F(u32Count)))) & ~1;
+    u32Height   = u32Count / u32Width;
+    u32Count    = u32Width * u32Height;
+    bGameOver   = orxFALSE;
+    astSlots    = (Slot *) orxMemory_Allocate(u32Count * sizeof(Slot), orxMEMORY_TYPE_MAIN);
 
     // Deal cards
     Deal();
@@ -28,6 +29,57 @@ void Table::OnDelete()
 
 void Table::Update(const orxCLOCK_INFO &_rstInfo)
 {
+    if(!bGameOver)
+    {
+        // Check cards
+        bGameOver = orxTRUE;
+        for(orxU32 i = 0; i < u32Count; i++)
+        {
+            if(astSlots[i].poCard != orxNULL)
+            {
+                bGameOver = orxFALSE;
+                break;
+            }
+        }
+
+        // Game Over?
+        if(bGameOver)
+        {
+            ggj2021    &roGame = ggj2021::GetInstance();
+            Player     *poWinner = orxNULL;
+            orxCHAR     acName[128] = {};
+
+            for(Player *poPlayer = roGame.GetNextObject<Player>();
+                poPlayer;
+                poPlayer = roGame.GetNextObject<Player>(poPlayer))
+            {
+                if((!poWinner)
+                || (poPlayer->u32Score > poWinner->u32Score)
+                || ((poPlayer->u32Score == poWinner->u32Score)
+                 && (poPlayer->u32Picks < poWinner->u32Picks)))
+                {
+                    poWinner = poPlayer;
+                }
+                poPlayer->astHands[0].poHand->Enable(orxFALSE);
+                poPlayer->astHands[1].poHand->Enable(orxFALSE);
+            }
+
+            orxConfig_PushSection("GameOver");
+            orxString_NPrint(acName, sizeof(acName) - 1, "%s", poWinner->GetModelName());
+            orxConfig_SetString("Winner", acName);
+            orxString_UpperCase(acName);
+            orxConfig_SetString("WINNER", acName);
+            orxConfig_PopSection();
+            roGame.CreateObject("GameOver");
+        }
+    }
+    else
+    {
+        if(orxInput_HasBeenActivated("Restart"))
+        {
+            orxInput_SetValue("Reset", orxFLOAT_1);
+        }
+    }
 }
 
 void Table::Deal()
@@ -44,7 +96,7 @@ void Table::Deal()
 
     // Create cards
     orxConfig_PushSection(orxConfig_GetString("Deck"));
-    for(orxU32 i = 0; i < u32CardCount; i += 2)
+    for(orxU32 i = 0; i < u32Count; i += 2)
     {
         const orxSTRING zCard = orxConfig_GetString("Cards");
         for(orxU32 j = 0; j < 2; j++)
