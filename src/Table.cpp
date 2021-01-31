@@ -130,6 +130,7 @@ void Table::Deal()
                 pstParent = orxObject_CreateFromConfig("Slot");
                 orxObject_SetPosition(pstParent, &vPos);
                 orxObject_SetOwner(pstParent, GetOrxObject());
+                orxObject_SetParent(pstParent, GetOrxObject());
                 orxObject_SetOwner(poCard->GetOrxObject(), GetOrxObject());
                 orxObject_SetParent(poCard->GetOrxObject(), pstParent);
                 astSlots[u32Count].poCard   = poCard;
@@ -156,5 +157,14 @@ void Table::Deal()
         poPlayer->poTable = this;
         poPlayer->Select(0, u32CardIndex++);
         poPlayer->Select(1, u32CardIndex++);
+    }
+
+    // Showcase?
+    if(u32CardIndex == 0)
+    {
+        for(orxU32 i = 0; i < u32Count; i++)
+        {
+            astSlots[i].poCard->SetAnim("Show");
+        }
     }
 }
