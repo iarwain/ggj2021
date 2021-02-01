@@ -130,7 +130,7 @@ void Table::Update(const orxCLOCK_INFO &_rstInfo)
                     ggj2021    &roGame = ggj2021::GetInstance();
                     Player     *poWinner = orxNULL;
                     orxCHAR     acName[128] = {};
-                    orxBOOL     bTie = orxFALSE;
+                    orxBOOL     bTie = orxFALSE, bBest = orxFALSE;
 
                     for(Player *poPlayer = roGame.GetNextObject<Player>();
                         poPlayer;
@@ -153,6 +153,18 @@ void Table::Update(const orxCLOCK_INFO &_rstInfo)
                         poPlayer->astHands[1].poHand->Enable(orxFALSE);
                     }
 
+                    // Solo?
+                    if(bSolo)
+                    {
+                        orxU32 u32Best;
+                        orxString_NPrint(acName, sizeof(acName) - 1, "%s%u", orxConfig_GetString("Deck"), orxConfig_GetU32("Count"));
+                        orxConfig_PushSection("Save");
+                        u32Best = orxConfig_GetU32(acName);
+                        orxConfig_SetU32(acName, (u32Best != 0) ? orxMIN(u32Best, poWinner->u32Picks) : poWinner->u32Picks);
+                        orxConfig_PopSection();
+                        bBest = ((u32Best == 0) || (poWinner->u32Picks < u32Best)) ? orxTRUE : orxFALSE;
+                    }
+
                     orxConfig_PushSection("GameOver");
                     orxString_NPrint(acName, sizeof(acName) - 1, "%s", poWinner->GetModelName());
                     orxConfig_SetString("Winner", bTie ? "Tie" : acName);
@@ -160,8 +172,9 @@ void Table::Update(const orxCLOCK_INFO &_rstInfo)
                     orxConfig_SetString("WINNER", bTie ? "TIE" : acName);
                     orxConfig_SetU32("Score", poWinner->u32Score);
                     orxConfig_SetU32("Picks", poWinner->u32Picks);
+                    orxConfig_SetBool("Best", bBest);
                     orxConfig_PopSection();
-                    roGame.CreateObject("GameOver");
+                    roGame.CreateObject(bSolo? "SoloGameOver" : "GameOver");
                 }
             }
             else

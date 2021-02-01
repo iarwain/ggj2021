@@ -94,6 +94,8 @@ orxSTATUS ggj2021::Run()
  */
 void ggj2021::Exit()
 {
+    // Save highscores
+    orxConfig_Save(orxFile_GetApplicationSaveDirectory("LostEcho/score.dat"), orxTRUE, &SaveCallback);
 }
 
 /** BindObjects function, ScrollObject-derived classes are bound to config sections here
@@ -120,7 +122,7 @@ orxSTATUS ggj2021::Bootstrap() const
     orxResource_AddStorage(orxCONFIG_KZ_RESOURCE_GROUP, "../data/font", orxFALSE);
 
     // Load scores
-    orxConfig_Load(orxFile_GetApplicationSaveDirectory("GGJ2021/score.dat"));
+    orxConfig_Load(orxFile_GetApplicationSaveDirectory("LostEcho/score.dat"));
 
     // Return orxSTATUS_FAILURE to prevent orx from loading the default config file
     return orxSTATUS_SUCCESS;
