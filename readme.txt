@@ -5,7 +5,7 @@
 A Global Game Jam 2021 by Aumniez & Iarwain.
 
 Can be played in solo (high score mode, with
-random auto-shuffle) or up to 4 players
+random auto-swap) or up to 4 players
 (fast-paced real-time competitive mode).
 
 Frank Brizuela
@@ -20,13 +20,13 @@ Player1
 Left Hand               - WASD
 Right Hand              - Arrow keys
 PickUp / Drop           - Space
-Shuffle Drop            - Shift
+Swap Drop               - Shift
             .. or ..
 Gamepad #1
 Left Hand               - Left Stick or D-Pad
 Right Hand              - Right Stick or ABXY
 PickUp / Drop           - Bumpers
-Shuffle Drop            - Triggers
+Swap Drop               - Triggers
 
 Player2
 -------
