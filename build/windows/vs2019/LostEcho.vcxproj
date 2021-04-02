@@ -27,7 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{A5DD2D8B-410D-8848-81D7-F14C972E2EB8}</ProjectGuid>
+    <ProjectGuid>{25FB97D6-ABD5-D24C-8382-63609982636F}</ProjectGuid>
     <RootNamespace>LostEcho</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
@@ -393,22 +393,23 @@
     <None Include="..\..\..\include\Scroll\ScrollBase.inl" />
     <None Include="..\..\..\include\Scroll\ScrollEd.inl" />
     <None Include="..\..\..\include\Scroll\ScrollObject.inl" />
+    <None Include="..\..\..\data\config\alphadeck.ini" />
     <None Include="..\..\..\data\config\card.ini" />
     <None Include="..\..\..\data\config\CreationTemplate.ini" />
     <None Include="..\..\..\data\config\dev.ini" />
     <None Include="..\..\..\data\config\font.ini" />
     <None Include="..\..\..\data\config\gameover.ini" />
     <None Include="..\..\..\data\config\geodeck.ini" />
-    <None Include="..\..\..\data\config\ggj2021.ini" />
     <None Include="..\..\..\data\config\LostEcho.ini" />
     <None Include="..\..\..\data\config\LostEchod.ini" />
     <None Include="..\..\..\data\config\LostEchop.ini" />
     <None Include="..\..\..\data\config\pixeldeck.ini" />
     <None Include="..\..\..\data\config\player.ini" />
+    <None Include="..\..\..\data\config\select.ini" />
     <None Include="..\..\..\data\config\SettingsTemplate.ini" />
     <None Include="..\..\..\data\config\sound.ini" />
-    <None Include="..\..\..\data\config\startmenu.ini" />
     <None Include="..\..\..\data\config\table.ini" />
+    <None Include="..\..\..\data\config\title.ini" />
     <None Include="..\..\..\data\config\tutorial.ini" />
   </ItemGroup>
   <ItemGroup>
