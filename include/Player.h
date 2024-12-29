@@ -42,6 +42,7 @@ private:
 
                 orxBOOL         bBusy               = {};
                 orxBOOL         bScore              = {};
+                orxBOOL         bNew                = {};
 };
 
 #endif // __PLAYER_H__

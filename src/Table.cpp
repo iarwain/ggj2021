@@ -22,6 +22,8 @@ void Table::OnCreate()
     // Init variables
     orxConfig_SetBool("IsTable", orxTRUE);
 
+    orxInput_EnableSet("SelectInput", orxTRUE);
+
     // Deal cards
     Deal();
 }
@@ -33,11 +35,6 @@ void Table::OnDelete()
 
     // Remove attract mode
     orxClock_RemoveGlobalTimer(Attract, -orxFLOAT_1, orxNULL);
-
-    if(bSelect)
-    {
-        orxInput_SelectSet("MainInput");
-    }
 }
 
 void Table::Update(const orxCLOCK_INFO &_rstInfo)
@@ -91,22 +88,22 @@ void Table::Update(const orxCLOCK_INFO &_rstInfo)
             if(orxInput_HasBeenActivated("1P"))
             {
                 orxConfig_SetParent("Scene", "1P");
+                GetOwner()->AddTrack("NextScreenTrack");
             }
             else if(orxInput_HasBeenActivated("2P"))
             {
                 orxConfig_SetParent("Scene", "2P");
+                GetOwner()->AddTrack("NextScreenTrack");
             }
             else if(orxInput_HasBeenActivated("3P"))
             {
                 orxConfig_SetParent("Scene", "3P");
+                GetOwner()->AddTrack("NextScreenTrack");
             }
             else if(orxInput_HasBeenActivated("4P"))
             {
                 orxConfig_SetParent("Scene", "4P");
-            }
-            if(orxInput_HasBeenActivated("Start"))
-            {
-                orxObject_AddTimeLineTrack(orxOBJECT(orxObject_GetOwner(GetOrxObject())), "PressStartTrack");
+                GetOwner()->AddTrack("NextScreenTrack");
             }
         }
         else
@@ -166,7 +163,7 @@ void Table::Update(const orxCLOCK_INFO &_rstInfo)
                     }
 
                     orxConfig_PushSection("GameOver");
-                    orxString_NPrint(acName, sizeof(acName) - 1, "%s", poWinner->GetModelName());
+                    orxString_NPrint(acName, sizeof(acName) - 1, "%s", poWinner->GetName());
                     orxConfig_SetString("Winner", bTie ? "Tie" : acName);
                     orxString_UpperCase(acName);
                     orxConfig_SetString("WINNER", bTie ? "TIE" : acName);
@@ -290,9 +287,8 @@ void Table::Deal()
         {
             for(orxU32 i = 0; i < u32Count; i++)
             {
-                astSlots[i].poCard->SetAnim("Show");
+                astSlots[i].poCard->SetAnim("Show", orxTRUE);
             }
-            orxInput_SelectSet("SelectInput");
             bSelect = orxTRUE;
         }
     }

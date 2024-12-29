@@ -6,8 +6,7 @@
 #ifndef __ggj2021_H__
 #define __ggj2021_H__
 
-#define __NO_SCROLLED__
-#include "Scroll.h"
+#include "Scroll/Scroll.h"
 
 /** Game Class
  */

@@ -7,14 +7,12 @@
 #include "ggj2021.h"
 #undef __SCROLL_IMPL__
 
+#include "orxExtensions.h"
+
 #include "Object.h"
 #include "Card.h"
 #include "Table.h"
 #include "Player.h"
-
-#define orxARCHIVE_IMPL
-#include "orxArchive.h"
-#undef orxARCHIVE_IMPL
 
 static orxBOOL sbRestart = orxTRUE;
 
@@ -59,6 +57,9 @@ void ggj2021::Update(const orxCLOCK_INFO &_rstInfo)
  */
 orxSTATUS ggj2021::Init()
 {
+    // Init extensions
+    InitExtensions();
+
     // Push game section
     orxConfig_PushSection("Game");
 
@@ -67,14 +68,6 @@ orxSTATUS ggj2021::Init()
     {
         orxViewport_CreateFromConfig(orxConfig_GetListString("ViewportList", i));
     }
-
-    // Enable all sets
-    orxConfig_PushSection("Input");
-    for(orxS32 i = 0, iCount = orxConfig_GetListCount("SetList"); i < iCount; i++)
-    {
-        orxInput_EnableSet(orxConfig_GetListString("SetList", i), orxTRUE);
-    }
-    orxConfig_PopSection();
 
     // Go to title
     CreateObject("Title");
@@ -96,6 +89,9 @@ void ggj2021::Exit()
 {
     // Save highscores
     orxConfig_Save(orxFile_GetApplicationSaveDirectory("LostEcho/score.dat"), orxTRUE, &SaveCallback);
+
+    // Exit from extensions
+    ExitExtensions();
 }
 
 /** BindObjects function, ScrollObject-derived classes are bound to config sections here
@@ -103,23 +99,18 @@ void ggj2021::Exit()
 void ggj2021::BindObjects()
 {
     // Bind all object classes
-    ScrollBindObject<Object>("Object");
-    ScrollBindObject<Card>("Card");
-    ScrollBindObject<Table>("Table");
-    ScrollBindObject<Player>("Player");
+    BindObject(Object);
+    BindObject(Card);
+    BindObject(Table);
+    BindObject(Player);
 }
 
 /** Bootstrap function, it is called before config is initialized, allowing for early resource storage definitions
  */
 orxSTATUS ggj2021::Bootstrap() const
 {
-    // Initialize archive (ZIP) resource type
-    orxArchive_Init();
-
-    // Add a config storage to find the initial config file
-    orxResource_AddStorage(orxCONFIG_KZ_RESOURCE_GROUP, "game.dat", orxFALSE);
-    orxResource_AddStorage(orxCONFIG_KZ_RESOURCE_GROUP, "../data/config", orxFALSE);
-    orxResource_AddStorage(orxCONFIG_KZ_RESOURCE_GROUP, "../data/font", orxFALSE);
+    // Bootstrap extensions
+    BootstrapExtensions();
 
     // Load scores
     orxConfig_Load(orxFile_GetApplicationSaveDirectory("LostEcho/score.dat"));
