@@ -148,7 +148,7 @@ solution "ggj2021"
         kind ("WindowedApp")
 
     configuration {"web"}
-        targetextension ".html"
+        targetextension ".js"
         targetsuffix ""
         targetdir "../bin/web"
         buildoptions
@@ -162,6 +162,7 @@ solution "ggj2021"
             "-sPTHREAD_POOL_SIZE=navigator.hardwareConcurrency",
             "-sAUDIO_WORKLET=1",
             "-sWASM_WORKERS=1",
+            "-sSTACK_SIZE=1048576",
             "-sASYNCIFY",
             "-sALLOW_MEMORY_GROWTH",
             "-sFULL_ES3=1",

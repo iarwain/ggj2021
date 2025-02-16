@@ -7,6 +7,6 @@ build/windows/**/.vs/*
 **.cih
 **/dev.ini
 **.dat
-bin/**.png
 **.sublime-workspace
 archive/**
+bin/

@@ -37,6 +37,7 @@ const orxSTRING orxFASTCALL                 orxBundle_GetOutputName();
 #define orxBUNDLE_KZ_CONFIG_SECTION         "Bundle"
 #define orxBUNDLE_KZ_CONFIG_INCLUDE_LIST    "IncludeList"
 #define orxBUNDLE_KZ_CONFIG_EXCLUDE_LIST    "ExcludeList"
+#define orxBUNDLE_KZ_CONFIG_EXTENSIVE       "Extensive"
 #define orxBUNDLE_KZ_LOG_TAG                orxANSI_KZ_COLOR_FG_YELLOW "[BUNDLE] " orxANSI_KZ_COLOR_RESET
 #define orxBUNDLE_KZ_RESOURCE_FORMAT        orxANSI_KZ_COLOR_FG_MAGENTA "[%s|%s]" orxANSI_KZ_COLOR_RESET
 #define orxBUNDLE_KU32_BUFFER_SIZE          16384
@@ -458,7 +459,7 @@ static orxINLINE orxSTATUS orxBundle_Process()
     orxBANK      *pstResourceBank;
     orxHASHTABLE *pstRuleTable, *pstDiscoveryTable;
     orxU32        i, j, iCount, jCount, u32GroupCount, u32ConfigHistoryExtensionLength;
-    orxBOOL       bBinary;
+    orxBOOL       bBinary, bExtensive;
 
     // Gets begin time
     dBeginTime = orxSystem_GetSystemTime();
@@ -478,6 +479,9 @@ static orxINLINE orxSTATUS orxBundle_Process()
 
     // Pushes bundle section
     orxConfig_PushSection(orxBUNDLE_KZ_CONFIG_SECTION);
+
+    // Updates status
+    bExtensive = orxConfig_GetBool(orxBUNDLE_KZ_CONFIG_EXTENSIVE);
 
     // For all rule lists
     for(i = 0, iCount = orxARRAY_GET_ITEM_COUNT(astRuleInfoList); i < iCount; i++)
@@ -515,6 +519,22 @@ static orxINLINE orxSTATUS orxBundle_Process()
         // Selects it
         orxConfig_SelectSection(zSection);
 
+        // Extensive mode & has an animation set?
+        if((bExtensive != orxFALSE) && (orxConfig_HasValue("AnimationSet") != orxFALSE))
+        {
+          orxOBJECT *pstObject;
+
+          // Creates the object
+          pstObject = orxObject_CreateFromConfig(zSection);
+
+          // Success?
+          if(pstObject != orxNULL)
+          {
+            // Deletes it
+            orxObject_Delete(pstObject);
+          }
+        }
+
         // For all keys
         for(j = 0, jCount = orxConfig_GetKeyCount(); j < jCount; j++)
         {
@@ -528,7 +548,7 @@ static orxINLINE orxSTATUS orxBundle_Process()
           || (orxString_Compare(zKey, orxBUNDLE_KZ_CONFIG_INCLUDE_LIST) == 0))
           {
             orxU32 k, kCount;
-            
+
             // For all its values
             for(k = 0, kCount = orxConfig_GetListCount(zKey); k < kCount; k++)
             {
@@ -970,7 +990,7 @@ static orxSTATUS orxFASTCALL orxBundle_EventHandler(const orxEVENT *_pstEvent)
   {
     // Checks
     orxASSERT(_pstEvent->eType == orxEVENT_TYPE_SYSTEM);
-    
+
     // Param ready?
     if(_pstEvent->eID == orxSYSTEM_EVENT_PARAM_READY)
     {
@@ -1022,8 +1042,8 @@ static orxSTATUS orxFASTCALL orxBundle_EventHandler(const orxEVENT *_pstEvent)
   return eResult;
 }
 
-// Locate function, returns NULL if it can't handle the storage or if the resource can't be found in this storage
-const orxSTRING orxFASTCALL orxBundle_Locate(const orxSTRING _zGroup, const orxSTRING _zStorage, const orxSTRING _zName, orxBOOL _bRequireExistence)
+// Locate: returns NULL if it can't handle the storage or if the resource can't be found in this storage
+static const orxSTRING orxFASTCALL orxBundle_Locate(const orxSTRING _zGroup, const orxSTRING _zStorage, const orxSTRING _zName, orxBOOL _bRequireExistence)
 {
   static orxCHAR  sacBuffer[512];
   static orxU32   su32StorageLength = 0;
@@ -1201,8 +1221,8 @@ const orxSTRING orxFASTCALL orxBundle_Locate(const orxSTRING _zGroup, const orxS
   return zResult;
 }
 
-// Open function: returns an opaque handle for subsequent function calls (GetSize, Seek, Tell, Read and Close) upon success, orxHANDLE_UNDEFINED otherwise
-orxHANDLE orxFASTCALL orxBundle_Open(const orxSTRING _zLocation, orxBOOL _bEraseMode)
+// Open: returns an handle for subsequent function calls (GetSize, Seek, Tell, Read and Close) upon success, orxHANDLE_UNDEFINED otherwise
+static orxHANDLE orxFASTCALL orxBundle_Open(const orxSTRING _zLocation, orxBOOL _bEraseMode)
 {
   orxHANDLE hResult = orxHANDLE_UNDEFINED;
 
@@ -1342,8 +1362,8 @@ orxHANDLE orxFASTCALL orxBundle_Open(const orxSTRING _zLocation, orxBOOL _bErase
   return hResult;
 }
 
-// Close function: releases all that has been allocated in Open
-void orxFASTCALL orxBundle_Close(orxHANDLE _hResource)
+// Close: releases all that has been allocated in Open
+static void orxFASTCALL orxBundle_Close(orxHANDLE _hResource)
 {
   BundleResource *pstResource;
 
@@ -1364,8 +1384,8 @@ void orxFASTCALL orxBundle_Close(orxHANDLE _hResource)
   return;
 }
 
-// GetSize function: simply returns the size of the extracted resource, in bytes
-orxS64 orxFASTCALL orxBundle_GetSize(orxHANDLE _hResource)
+// GetSize: returns the size of the resource, in bytes
+static orxS64 orxFASTCALL orxBundle_GetSize(orxHANDLE _hResource)
 {
   BundleResource *pstResource;
   orxS64          s64Result;
@@ -1380,8 +1400,8 @@ orxS64 orxFASTCALL orxBundle_GetSize(orxHANDLE _hResource)
   return s64Result;
 }
 
-// Seek function: position the read cursor inside the data and returns the offset from start upon success or -1 upon failure
-orxS64 orxFASTCALL orxBundle_Seek(orxHANDLE _hResource, orxS64 _s64Offset, orxSEEK_OFFSET_WHENCE _eWhence)
+// Seek: position the read cursor inside the data and returns the offset from start upon success or -1 otherwise
+static orxS64 orxFASTCALL orxBundle_Seek(orxHANDLE _hResource, orxS64 _s64Offset, orxSEEK_OFFSET_WHENCE _eWhence)
 {
   BundleResource *pstResource;
   orxS64          s64Cursor;
@@ -1437,8 +1457,8 @@ orxS64 orxFASTCALL orxBundle_Seek(orxHANDLE _hResource, orxS64 _s64Offset, orxSE
   return s64Cursor;
 }
 
-// Tell function: returns current read cursor
-orxS64 orxFASTCALL orxBundle_Tell(orxHANDLE _hResource)
+// Tell: returns current read cursor
+static orxS64 orxFASTCALL orxBundle_Tell(orxHANDLE _hResource)
 {
   orxS64 s64Result;
 
@@ -1449,8 +1469,8 @@ orxS64 orxFASTCALL orxBundle_Tell(orxHANDLE _hResource)
   return s64Result;
 }
 
-// Read function: copies the requested amount of data, in bytes, to the given buffer and returns the amount of bytes copied
-orxS64 orxFASTCALL orxBundle_Read(orxHANDLE _hResource, orxS64 _s64Size, void *_pu8Buffer)
+// Read: copies the requested amount of data, in bytes, to the given buffer and returns the amount of copied bytes
+static orxS64 orxFASTCALL orxBundle_Read(orxHANDLE _hResource, orxS64 _s64Size, void *_pu8Buffer)
 {
   BundleResource *pstResource;
   orxS64          s64CopySize;

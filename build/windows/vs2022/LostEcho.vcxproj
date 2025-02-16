@@ -35,7 +35,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{554F0137-A250-964B-A995-292C30A6C507}</ProjectGuid>
+    <ProjectGuid>{76D22B03-B390-7F48-8020-700905F4B303}</ProjectGuid>
     <RootNamespace>LostEcho</RootNamespace>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>

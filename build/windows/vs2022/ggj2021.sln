@@ -1,7 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 13.00
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2022
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LostEcho", "LostEcho.vcxproj", "{554F0137-A250-964B-A995-292C30A6C507}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LostEcho", "LostEcho.vcxproj", "{76D22B03-B390-7F48-8020-700905F4B303}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,22 +15,22 @@ Global
 		Bundle|Win32 = Bundle|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{554F0137-A250-964B-A995-292C30A6C507}.Debug|x64.ActiveCfg = Debug|x64
-		{554F0137-A250-964B-A995-292C30A6C507}.Debug|x64.Build.0 = Debug|x64
-		{554F0137-A250-964B-A995-292C30A6C507}.Debug|Win32.ActiveCfg = Debug|Win32
-		{554F0137-A250-964B-A995-292C30A6C507}.Debug|Win32.Build.0 = Debug|Win32
-		{554F0137-A250-964B-A995-292C30A6C507}.Profile|x64.ActiveCfg = Profile|x64
-		{554F0137-A250-964B-A995-292C30A6C507}.Profile|x64.Build.0 = Profile|x64
-		{554F0137-A250-964B-A995-292C30A6C507}.Profile|Win32.ActiveCfg = Profile|Win32
-		{554F0137-A250-964B-A995-292C30A6C507}.Profile|Win32.Build.0 = Profile|Win32
-		{554F0137-A250-964B-A995-292C30A6C507}.Release|x64.ActiveCfg = Release|x64
-		{554F0137-A250-964B-A995-292C30A6C507}.Release|x64.Build.0 = Release|x64
-		{554F0137-A250-964B-A995-292C30A6C507}.Release|Win32.ActiveCfg = Release|Win32
-		{554F0137-A250-964B-A995-292C30A6C507}.Release|Win32.Build.0 = Release|Win32
-		{554F0137-A250-964B-A995-292C30A6C507}.Bundle|x64.ActiveCfg = Bundle|x64
-		{554F0137-A250-964B-A995-292C30A6C507}.Bundle|x64.Build.0 = Bundle|x64
-		{554F0137-A250-964B-A995-292C30A6C507}.Bundle|Win32.ActiveCfg = Bundle|Win32
-		{554F0137-A250-964B-A995-292C30A6C507}.Bundle|Win32.Build.0 = Bundle|Win32
+		{76D22B03-B390-7F48-8020-700905F4B303}.Debug|x64.ActiveCfg = Debug|x64
+		{76D22B03-B390-7F48-8020-700905F4B303}.Debug|x64.Build.0 = Debug|x64
+		{76D22B03-B390-7F48-8020-700905F4B303}.Debug|Win32.ActiveCfg = Debug|Win32
+		{76D22B03-B390-7F48-8020-700905F4B303}.Debug|Win32.Build.0 = Debug|Win32
+		{76D22B03-B390-7F48-8020-700905F4B303}.Profile|x64.ActiveCfg = Profile|x64
+		{76D22B03-B390-7F48-8020-700905F4B303}.Profile|x64.Build.0 = Profile|x64
+		{76D22B03-B390-7F48-8020-700905F4B303}.Profile|Win32.ActiveCfg = Profile|Win32
+		{76D22B03-B390-7F48-8020-700905F4B303}.Profile|Win32.Build.0 = Profile|Win32
+		{76D22B03-B390-7F48-8020-700905F4B303}.Release|x64.ActiveCfg = Release|x64
+		{76D22B03-B390-7F48-8020-700905F4B303}.Release|x64.Build.0 = Release|x64
+		{76D22B03-B390-7F48-8020-700905F4B303}.Release|Win32.ActiveCfg = Release|Win32
+		{76D22B03-B390-7F48-8020-700905F4B303}.Release|Win32.Build.0 = Release|Win32
+		{76D22B03-B390-7F48-8020-700905F4B303}.Bundle|x64.ActiveCfg = Bundle|x64
+		{76D22B03-B390-7F48-8020-700905F4B303}.Bundle|x64.Build.0 = Bundle|x64
+		{76D22B03-B390-7F48-8020-700905F4B303}.Bundle|Win32.ActiveCfg = Bundle|Win32
+		{76D22B03-B390-7F48-8020-700905F4B303}.Bundle|Win32.Build.0 = Bundle|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
